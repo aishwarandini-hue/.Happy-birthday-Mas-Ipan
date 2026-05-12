@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mas Ipan 🌻</title>
+
+<style>
+body{
+margin:0;
+overflow:hidden;
+background:black;
+color:white;
+font-family:Arial;
+}
+
+.bg{
+position:fixed;
+inset:0;
+background:radial-gradient(circle,#2b1055,#000);
+animation:bg 10s infinite alternate;
+z-index:-2;
+}
+
+@keyframes bg{
+from{transform:scale(1)}
+to{transform:scale(1.1)}
+}
+
+.slide{
+position:absolute;
+width:100%;
+height:100%;
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+opacity:0;
+transition:1s;
+filter:blur(10px);
+text-align:center;
+padding:20px;
+pointer-events:none; /*  PENTING */
+}
+
+.active{
+opacity:1;
+filter:blur(0);
+pointer-events:auto; /*  PENTING BIAR BISA DIKLIK */
+}
+
+
+
+.btn{
+position:relative;
+z-index:999;
+}
+padding:12px 20px;
+border:none;
+border-radius:20px;
+background:gold;
+font-weight:bold;
+cursor:pointer;
+margin-top:15px;
+}
+
+/* STAR */
+.star{
+position:absolute;
+width:2px;height:2px;
+background:white;
+border-radius:50%;
+animation:tw 2s infinite;
+}
+
+@keyframes tw{
+0%,100%{opacity:.2}
+50%{opacity:1}
+}
+
+/* SHOOTING STAR */
+.shooting-star{
+position:absolute;
+width:120px;height:2px;
+background:linear-gradient(90deg,#fff,transparent);
+transform:rotate(-45deg);
+animation:shoot 3s linear infinite;
+opacity:0;
+}
+
+@keyframes shoot{
+0%{transform:translate(0,0) rotate(-45deg);opacity:0}
+10%{opacity:1}
+100%{transform:translate(500px,500px) rotate(-45deg);opacity:0}
+}
+
+/* FLOWER */
+.flower{
+position:absolute;
+font-size:18px;
+animation:fall 6s linear infinite;
+}
+
+@keyframes fall{
+to{transform:translateY(110vh)}
+}
+
+/* TEXT BOX */
+.textBox{
+max-width:600px;
+animation:float 3s infinite;
+}
+
+@keyframes float{
+50%{transform:translateY(-10px)}
+}
+
+/* INTRO TYPE */
+.typing{
+font-size:20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg"></div>
+
+<audio id="bgm" loop>
+<source src="https://cdn.pixabay.com/download/audio/2022/10/25/audio_d5a3c6d1c1.mp3">
+</audio>
+
+<!-- INTRO -->
+<div class="slide active" id="s0">
+<div class="typing" id="typing"></div>
+<button class="btn" onclick="start()">Klik di sini ✨</button>
+</div>
+
+<!-- SPACE -->
+<div class="slide" id="s1">
+<h2>🌌 Galaxy Space</h2>
+</div>
+
+<!-- FLOWER -->
+<div class="slide" id="s2">
+<h2>🌻 Sunflower Rain</h2>
+</div>
+
+<!-- UCAPAN -->
+<div class="slide" id="s3">
+<div class="textBox">
+
+<h2>Barakallah fii umrik mas Ipan 🌻</h2>
+
+<p>
+Udah naik level ke 23 tahun nih xixi, semoga mas Ipan selalu dikelilingi hal-hal baik, dilancarkan segalanya, sehat selalu, makin bahagia, makin banyak rezeki, dan tetap jadi mas Ipan yang keren ✨
+</p>
+
+<p>
+Semoga hidup mas Ipan juga kayak bunga matahari—tetap tumbuh dan tetap nyari cahaya walau hidup kadang suka ada plot twist 🌻
+</p>
+
+<p style="margin-top:15px;font-weight:bold">
+🎉 Happy Birthday Mas Ipan 🎉
+</p>
+
+</div>
+</div>
+
+<script>
+
+let i = 0;
+let started = false;
+
+/* TYPEWRITER */
+const text = "Hai haii mas Ipan klik tombol di sini ya 🌻";
+let idx = 0;
+
+function type(){
+if(idx < text.length){
+document.getElementById("typing").innerHTML += text.charAt(idx);
+idx++;
+setTimeout(type, 50);
+}
+}
+type();
+
+/* START BUTTON */
+function start(){
+if(started) return;
+started = true;
+
+/* music fix */
+const m = document.getElementById("bgm");
+m.volume = 0.7;
+m.play().catch(()=>{});
+
+next();
+}
+
+/* NEXT SLIDE */
+function next(){
+document.querySelectorAll(".slide").forEach(s => s.classList.remove("active"));
+i++;
+
+let el = document.getElementById("s"+i);
+if(el) el.classList.add("active");
+
+if(i === 1) stars();
+if(i === 2) flowers();
+if(i >= 1) shoot();
+}
+
+/* STAR */
+function stars(){
+for(let a=0;a<80;a++){
+let s=document.createElement("div");
+s.className="star";
+s.style.left=Math.random()*100+"vw";
+s.style.top=Math.random()*100+"vh";
+document.body.appendChild(s);
+}
+}
+
+/* SHOOTING STAR */
+function shoot(){
+for(let a=0;a<3;a++){
+let sh=document.createElement("div");
+sh.className="shooting-star";
+sh.style.left=Math.random()*100+"vw";
+sh.style.top=Math.random()*100+"vh";
+document.body.appendChild(sh);
+}
+}
+
+/* FLOWER */
+function flowers(){
+for(let a=0;a<60;a++){
+let f=document.createElement("div");
+f.className="flower";
+f.innerHTML="🌻";
+f.style.left=Math.random()*100+"vw";
+f.style.top="-20px";
+document.body.appendChild(f);
+}
+}
+
+</script>
+
+</body>
+</html>
